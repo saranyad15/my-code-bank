@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BTS SHOPPY</title>
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+    <style>
+        /* Basic Styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            padding: 10px;
+            background: #f8f9fa;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .product-card {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .product-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            opacity: 0;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .product-info {
+            padding: 15px;
+        }
+
+        .add-to-cart {
+            background: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s ease;
+        }
+
+        .add-to-cart:hover {
+            background: #0056b3;
+        }
+
+        #cart-notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #28a745;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        #scroll-to-top {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            padding: 10px;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            display: none;
+            cursor: pointer;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <header>
+        <h1>BTS SHOPPY STORE</h1>
+        <div id="filter-bar">
+            <select id="sort-options">
+                <option value="default">Sort By</option>
+                <option value="low-to-high">Low to High</option>
+                <option value="high-to-low">High to Low</option>
+            </select>
+        </div>
+    </header>
+    <main>
+        <div id="product-grid"></div>
+    </main>
+
+    <div id="cart-notification">Item added to cart!</div>
+
+    <button id="scroll-to-top">↑</button>
+
+    <!-- <script src="script.js"></script> -->
+    <script>
+        const products = [
+      { id: 1, name: "Product 1", price: 100, image: "https://images.app.goo.gl/1zewriynuHm9eCzM9"},
+      { id: 2, name: "Product 2", price: 150, image: "https://images.unsplash.com/photo-1560807707-8cc77767d783?w=400&h=300"},
+      { id: 3, name: "Product 3", price: 200, image: "https://images.unsplash.com/photo-1560807707-8cc77767d783?w=400&h=300"},
+      { id: 4, name: "Product 4", price: 250, image: "https://images.unsplash.com/photo-1560807707-8cc77767d783?w=400&h=300"},
+      { id: 5, name: "Product 5", price: 300, image: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=400&h=300"}
+    ];
+
+        const productGrid = document.getElementById('product-grid');
+
+        // Load products into the grid
+        products.forEach(product => {
+            const productCard = document.createElement('div');
+            productCard.classList.add('product-card');
+            productCard.innerHTML = `
+    <img class="product-image" src="${product.image}" alt="${product.name}">
+    <div class="product-info">
+      <h3>${product.name}</h3>
+      <p>Price: $${product.price}</p>
+      <button class="add-to-cart">Add to Cart</button>
+    </div>
+    `;
+            productGrid.appendChild(productCard);
+        });
+
+        // Add event listener for "Add to Cart" button
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', () => {
+                const cartNotification = document.getElementById('cart-notification');
+                cartNotification.style.display = 'block';
+                setTimeout(() => {
+                    cartNotification.style.display = 'none';
+                }, 2000);
+            });
+        });
+
+        // Show scroll-to-top button
+        const scrollToTopButton = document.getElementById('scroll-to-top');
+        window.addEventListener('scroll', () => {
+            scrollToTopButton.style.display = window.scrollY > 200 ? 'block' : 'none';
+        });
+
+        scrollToTopButton.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+
+    </script>
+
+</body>
+
+</html>
